@@ -22,7 +22,7 @@ Should you use this app for one of your projects, please [drop me a line](https:
 ## How to install
 
 ### Prerequisites
-- A web server
+- A web server (tested only on Apache)
 - PHP 5.x
 - MySql 5.x
 - Access to cron
@@ -95,6 +95,9 @@ Type
 in your terminal to start the scraper. This operation will read all the links contained in the temporary table, check them against some rule (defined in `\SL\Utilities\Linkify::validURL()` in `./core/classes/Utilities/Linkify`), start a cURL request to grab title, description and image. Only valid links will then be moved to the `articles` table in the database, and relations will be created.
 This script handles 100 links for each time it is run, start it manually until you see the `links` table becoming empty.
 
+> #### Blacklisting URLs
+> open `./core/classes/Utilities/Linkify` you'll see a `validLink()` method. The `if` statement returns true if the current link does not point to the listed domains. By default, any link that points to twitter.com or t.co should be considered invaid (you'll finish indexing retweets and reply to tweets related to trending topics instead of 3rd party articles about those topics). I added a filter to domains that I recognize as SPAM, other aggregators (i.e. paper.li, news.google.com), or shortened links that for some reason the scraper has not been able to follow (i.e. goo.gl, sh.st, etc.). Add or remove controls and conditions depending on your preferences.
+
 Once finshed, pointing your browser to `http://youdomain` should show you the homepage of the application, showing a maximum of 7 different trending topics among the ones that have been grabbed the last time the script has been run. The topics shown are ordered in descending order based on the number of valid links found for each topic. Only topics with more than 1 valid link are shown.
 
 While these two scripts run, you should be able to see a log describing what they are doing. Once you tested it running for the first time, if everything works, you'll be able to add these commands to your cron in order to execute them automatically.
@@ -103,8 +106,28 @@ While these two scripts run, you should be able to see a log describing what the
 > The debug text shown on your terminal are also saved in 2 different files: `./core/cache/_import_log.txt` and `./core/cache/scraper_log.txt`: this will help you debugging once these script will be configured to run via cron.
 
 The repository contains 2 shell scripts that you might find useful. Open each of them with your favourite text editor, and adjust file paths according to your server configuration.
-On the test server `twitter.sh` is executed every 30 minutes, while `scraper.sh` is configured to be executed every minute. In this way, being my box a 2 cores, I've been able to partially palallelize scraping tasks without running the risk to go out of memory. Remember that the frequency of updates must take into consideration your server hardware, other software running on the same machine, and Twitter API limits.
+On the test server `twitter.sh` is executed every 30 minutes, while `scraper.sh` is configured to be executed every minute. In this way, being my box a 2 cores, I've been able to partially parallelize scraping tasks without running the risk to go out of memory. Remember that the frequency of updates must take into consideration your server hardware, other software running on the same machine, and Twitter API limits.
 
+#### The twitter.sh file
+This script first checks if the twitter bot is already running, if not moves the current directory to the one where you installed the application, and starts the bot.
+
+#### The scraper.sh script
+This script first checks if the twitter bot is running; if not, moves the current directory to the one where you instaled the application, then starts 2 instances of the scraper with a 5 seconds delay. I do this to optimize resources on the server. If your box has more than 2 cores, you can start more parallel instances of the scraper.
+Each scraper instance will end in more or less one minute; handling 100 links each time, it is able to scrape more or less 200 links every minute. It will be easy for you to compute how much time is needed to completely finish each scraping session, starting from the first Twitter API call.
+On my machine, it takes 5 to 9 minute depending on the number of valid links found. 
+
+## Theming
+HTML, CSS, images, and javascript are in the `themes/2016` folder.
+If you want to create a custom theme, just duplicate with another name, customize all the assets, and then change the `$theme_name` variable in `settings.php`.
+While developing, you can tell the website to load an alternative theme by adding 'theme=YOUR_THEME_NAME` as a querystring parameter.
+
+The default theme, called _2016_, shows every available variable available for the theme. As you'll notice, the list of filtered links is returned as a JSON object, and then rendered via Javascript using [Mustache](https://github.com/janl/mustache.js/). Changing this behavior will be easy if you know a little PHP: edit `core/sources/browse.php` and comment out
+
+	$format = 'json';
+	
+Then create a `browse.html` template in your template directory and edit the `home.html` template to be sure that every link points to the correct resource (at the moment there is a Javascript that checks an 'hashchange` event).
+
+The templating engine is [Twig](http://twig.sensiolabs.org), please check the [docs](http://twig.sensiolabs.org/documentation) to know more.
 
 ## License
 MIT License
