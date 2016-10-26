@@ -103,7 +103,7 @@ While these two scripts run, you should be able to see a log describing what the
 > The debug text shown on your terminal are also saved in 2 different files: `./core/cache/_import_log.txt` and `./core/cache/scraper_log.txt`: this will help you debugging once these script will be configured to run via cron.
 
 The repository contains 2 shell scripts that you might find useful. Open each of them with your favourite text editor, and adjust file paths according to your server configuration.
-On the test server `twitter.sh` is executed every 30 minutes, while `scraper.sh` is configured to be executed every minute. In this way, being my box a 2 cores, I've been able to partially palallelize scraping tasks without running the risk to go out of memory. Remember that the frequency of updates must take into consideration both your server hardware, the other software running on the same machine, and Twitter API limits.
+On the test server `twitter.sh` is executed every 30 minutes, while `scraper.sh` is configured to be executed every minute. In this way, being my box a 2 cores, I've been able to partially palallelize scraping tasks without running the risk to go out of memory. Remember that the frequency of updates must take into consideration your server hardware, other software running on the same machine, and Twitter API limits.
 
 
 ## License
