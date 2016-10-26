@@ -66,8 +66,44 @@ and the "browse" page (the script that returns the JSON with all the articles re
 Source files are located in `/core/sources`.
 Check [PHP Boilerplate](https://github.com/leeppolis/php-boilerplate) README file for more info about routing and file and directory structure.
 
-#### Note
-Files executed from the command line (like `twitter.php` and `scraper.php`) doesn't need to have a defined route.
+> #### Note
+> Files executed from the command line (like `twitter.php` and `scraper.php`) doesn't need to have a defined route.
+
+### Twitter API
+In order to be able to connect to and to consume the Twitter API you need to have a valid key/secret pair, and configure the relative variables in `settings.php`. To get a valid API key, and for more information on how Twitter API works, please visit [Twitter's developer portal](https://dev.twitter.com).
+
+## How to start indexing
+Once you configured everything, you should be able to start indexing.
+My advice is to try to start everything manually before configuring your cron job.
+To grab the current Twitter trending topic, move to the directory where you installed the application and type
+
+	# php index.php twitter
+	
+This command will start the first few steps required to fill the database:
+
+1. Will connect to the Twitter API to grub the current trending topics, and save them in the `topics` table in your database
+2. For each topic, will then search Twitter's API to get tweets related to that topic
+3. Will analyze the received tweets, and save the links contained in each of them into the temporary `links` table in your database.
+
+This operation should finish within 5 minutes.
+
+Once finished, it's time to start scraping.
+Type
+
+	# php index.php scraper
+	
+in your terminal to start the scraper. This operation will read all the links contained in the temporary table, check them against some rule (defined in `\SL\Utilities\Linkify::validURL()` in `./core/classes/Utilities/Linkify`), start a cURL request to grab title, description and image. Only valid links will then be moved to the `articles` table in the database, and relations will be created.
+This script handles 100 links for each time it is run, start it manually until you see the `links` table becoming empty.
+
+Once finshed, pointing your browser to `http://youdomain` should show you the homepage of the application, showing a maximum of 7 different trending topics among the ones that have been grabbed the last time the script has been run. The topics shown are ordered in descending order based on the number of valid links found for each topic. Only topics with more than 1 valid link are shown.
+
+While these two scripts run, you should be able to see a log describing what they are doing. Once you tested it running for the first time, if everything works, you'll be able to add these commands to your cron in order to execute them automatically.
+
+> #### Note
+> The debug text shown on your terminal are also saved in 2 different files: `./core/cache/_import_log.txt` and `./core/cache/scraper_log.txt`: this will help you debugging once these script will be configured to run via cron.
+
+The repository contains 2 shell scripts that you might find useful. Open each of them with your favourite text editor, and adjust file paths according to your server configuration.
+On the test server `twitter.sh` is executed every 30 minutes, while `scraper.sh` is configured to be executed every minute. In this way, being my box a 2 cores, I've been able to partially palallelize scraping tasks without running the risk to go out of memory. Remember that the frequency of updates must take into consideration both your server hardware, the other software running on the same machine, and Twitter API limits.
 
 
 ## License
