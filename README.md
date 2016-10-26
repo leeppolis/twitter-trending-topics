@@ -42,10 +42,32 @@ Third party libraries are defined in the `composer.json` file.
 ### Step-by-step
 
 1. Clone this repository to your webserver's public folder
-2. Use [Composer](https://getcomposer.org) to get all the required dependencies. From your terminal, type `$ composer update` (this command depends on your configuration, check [Composer](https://getcomposer.org)'s docs for more options)
+2. Use [Composer](https://getcomposer.org) to get all the required dependencies. From your terminal, type `composer update` (this command depends on your configuration, check [Composer](https://getcomposer.org)'s docs for more options)
 3. Create a new Database on your mySql server, and create the required tables importing the `database.sql` file
-4. Check if the folder './core/cache' is writable by your webserver. If not, `chmod 777 ./core/cache`. This folder will contain all the 
+4. Check if the folder './core/cache' is writable by your webserver. If not, `chmod 777 ./core/cache`. This folder will contain all the cached template files and the twitter bot and scraper logs.
+5. Open `settings.php` with your favourite editor
 
+### Settings
+The `settings.php` file contains all the configuration for the application. You'l need to fill that with your database configuration, name and description of your website, your timezone, etc. It also contains the routing configuration. Each configuration variable should be self-explanatory, but look at the inline comments to know more about each property. 
+
+### Routing
+As already stated above, the application needs `mod_rewrite` enabled on your server. A copy of a working `.htaccess` file is included in the repository. If you have access to the virtual host configuration, my advice is to move the rules defined in the `.htaccess` file directly to the apache config file: this will make everything faster.
+
+Routing is defined by the `$routes` hash in `settings.php`. The `key` of the hash contains a regex defining the rules to be matched for the file in `value` to be executed.
+
+In this way, the homepage of the application is defined as 
+
+    '/^(\/)?$/' => 'home.php'
+    
+and the "browse" page (the script that returns the JSON with all the articles related to a certain #hashtag)
+
+	'/^browse(\/)?([a-zA-Z0-9_%#\+\-.]*)?$/' => 'browse.php'
+
+Source files are located in `/core/sources`.
+Check [PHP Boilerplate](https://github.com/leeppolis/php-boilerplate) README file for more info about routing and file and directory structure.
+
+#### Note
+Files executed from the command line (like `twitter.php` and `scraper.php`) doesn't need to have a defined route.
 
 
 ## License
