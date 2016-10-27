@@ -92,16 +92,16 @@ Type
 
 	# php index.php scraper
 	
-in your terminal to start the scraper. This operation will read all the links contained in the temporary table, check them against some rule (defined in `\SL\Utilities\Linkify::validURL()` in `./core/classes/Utilities/Linkify`), start a cURL request to grab title, description and image. Only valid links will then be moved to the `articles` table in the database, and relations will be created.
-This script handles 100 links for each time it is run, start it manually until you see the `links` table becoming empty.
+in your terminal to start the scraper. This operation will read all the links contained in the temporary table, check them against some rule (see "Blacklisting URLs"), start a cURL request to grab title, description and image. Only valid links will then be moved to the `articles` table in the database, and relations will be created.
+This script handles 100 links for each time it is run, start it repeatedly until you see the `links` table becoming empty.
 
 > #### Consuming Twitter APIs
 > The application uses [TwitterOAuth](https://github.com/abraham/twitteroauth) to consume Twitter's APIs. Have a look both at its documentation, and [Twitter API docs](https://dev.twitter.com/overview/documentation) to find wonderful ways to extend this application's functionalities.
 
-Once finshed, pointing your browser to `http://youdomain` should show you the homepage of the application, showing a maximum of 7 different trending topics among the ones that have been grabbed the last time the script has been run. The topics shown are ordered in descending order based on the number of valid links found for each topic. Only topics with more than 1 valid link are shown.
+Once finshed, point your browser to `http://youdomain` and you should be able to see the homepage of the application, showing a maximum of 7 different trending topics among the ones that have been grabbed the last time the script has been run. The topics shown are ordered in descending order based on the number of valid links found for each topic. Only topics with more than 1 valid link are shown.
 
 > #### Blacklisting URLs
-> open `./core/classes/Utilities/Blacklist` you'll see a `validLink()` method. The `if` statement returns true if the current link does not point to the listed domains. By default, any link that points to twitter.com or t.co should be considered invaid (you'll finish indexing retweets and reply to tweets related to trending topics instead of 3rd party articles about those topics). I added a filter to domains that I recognize as SPAM, other aggregators (i.e. paper.li, news.google.com), or shortened links that for some reason the scraper has not been able to follow (i.e. goo.gl, sh.st, etc.). Add or remove controls and conditions depending on your preferences.
+> Open `./core/classes/Utilities/Blacklist` you'll see a `validLink()` method. The `if` statement returns true if the current link does not point to the listed domains. By default, any link that points to twitter.com or t.co should be considered invaid (you'll finish indexing retweets and reply to tweets related to trending topics instead of 3rd party articles about those topics). I added a filter to domains that I recognize as SPAM, other aggregators (i.e. paper.li, news.google.com), or shortened links that for some reason the scraper has not been able to follow (i.e. goo.gl, sh.st, etc.). Please note that *usually* shortened URLs are expanded and followed by the scraper. Only in the case the scraper cannot expand an URL it returns the original shortened URL, that will be discarded. Add or remove controls and conditions depending on your preferences.
 
 While these two scripts run, you should be able to see a log describing what they are doing. Once you tested it running for the first time, if everything works, you'll be able to add these commands to your cron in order to execute them automatically.
 
