@@ -135,11 +135,11 @@ Then create a `browse.html` template in your template directory and edit the `ho
 > A lot of websites enforce hotline preventions policies, and this might result in a lot of broken images on your site. Proving images using `image.php` should avoid this problem, by serving a predefined placeholder in case the scraped image URL is not available.
 >  To leverage the possibilities offered by the `image.php` script, replace the `src` tag of the image in your template:
 >  
-> `<img src="{{ image }}"/>`
+> `<img src="{{ article.image }}"/>`
 >
 > with
 > 
-> `<img src="{{ output.properties.base_url }}/image?i={{ image }}&r={{ link }}" />` 
+> `<img src="{{ output.properties.base_url }}/image?i={{ article.image }}&r={{ article.link }}" />` 
 
 The templating engine is [Twig](http://twig.sensiolabs.org), please check the [docs](http://twig.sensiolabs.org/documentation) to know more.
 
