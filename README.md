@@ -130,6 +130,17 @@ The default theme, called _2016_, shows every available variable available for t
 	
 Then create a `browse.html` template in your template directory and edit the `home.html` template to be sure that every link points to the correct resource (at the moment there is a Javascript that checks an 'hashchange` event).
 
+> #### Article's images
+> The application also makes available for the theme the `articles.image` variable. While usually it contains a URL to an image or `null` my advice is to proxy it through the `image.php` script.
+> A lot of websites enforce hotline preventions policies, and this might result in a lot of broken images on your site. Proving images using `image.php` should avoid this problem, by serving a predefined placeholder in case the scraped image URL is not available.
+>  To leverage the possibilities offered by the `image.php` script, replace the `src` tag of the image in your template:
+>  
+> `<img src="{{ image }}"/>`
+>
+> with
+> 
+> `<img src="{{ output.properties.base_url }}/image?i={{ image }}&r={{ link }}" />` 
+
 The templating engine is [Twig](http://twig.sensiolabs.org), please check the [docs](http://twig.sensiolabs.org/documentation) to know more.
 
 ## License
