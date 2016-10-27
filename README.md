@@ -43,7 +43,7 @@ Third party libraries are defined in the `composer.json` file.
 
 1. Clone this repository to your webserver's public folder
 2. Use [Composer](https://getcomposer.org) to get all the required dependencies. From your terminal, type `composer update` (this command depends on your configuration, check [Composer](https://getcomposer.org)'s docs for more options)
-3. Create a new Database on your mySql server, and create the required tables importing the `database.sql` file
+3. Create a new Database on your mySql server, and create the required tables importing the `trending.sql` file
 4. Check if the folder './core/cache' is writable by your webserver. If not, `chmod 777 ./core/cache`. This folder will contain all the cached template files and the twitter bot and scraper logs.
 5. Open `settings.php` with your favourite editor
 
