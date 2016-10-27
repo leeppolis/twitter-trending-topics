@@ -1,0 +1,16 @@
+{% if output.page.title %}
+<header class="header">
+	<h1>#{{ output.page.title|replace({'#':''}) }}</h1>
+	{% if output.topics %}
+	<div class="selector">
+		<ul class="topics">
+			{% for topic in output.topics %}
+				{% if output.page.title != topic.keyword %}
+				<li class="topic topic-{{ loop.index }}"><a href="{{ output.properties.base_url }}/browse/{{ topic.query }}">#{{ topic.keyword|replace({'#':''}) }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+</header>
+{% endif %}

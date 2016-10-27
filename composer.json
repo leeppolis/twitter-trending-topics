@@ -1,0 +1,8 @@
+{
+    "require": {
+        "twig/twig": "^1.26.1",
+        "fabpot/goutte": "^3.1.2",
+        "abraham/twitteroauth":"^0.6.6",
+        "crewlabs/unsplash":"^2.2.1"
+    }
+}

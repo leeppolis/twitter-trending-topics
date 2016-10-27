@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" data-run-id="{{output.run_id}}">
+	<head>
+		{% include '_head.html' %}
+	</head>
+	<body class="notfound">
+		{% include '_header.html' %}
+		<div class="cover">
+			<header>
+				<h1>Whoops there was an error!</h1>
+				<h2>A battalion of engineers has been alerted.<br>
+					They're already working to solve the problem.</h2>
+				<a href="{{ output.properties.base_url }}">Homepage</a>
+			</header>
+		</div>
+		{% include '_footer.html' %}
+	</body>
+</html>
