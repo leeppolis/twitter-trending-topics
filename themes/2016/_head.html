@@ -14,8 +14,26 @@
 
 <title>{{ output.head.title }}</title>
 <script>
-	var home = '{{ output.properties.base_url }}';
-</script>
+	var home = '{{ output.properties.base_url }}',
+		hour = parseInt( new Date().getHours() ),
+		pageTitle = document.title,
+		img = 'cover.jpg';
+	
+		if ( hour >= 21 ) {
+			img = 'night.jpg';
+		} else if ( hour >= 18 ) {
+			img = 'dusk.jpg';
+		} else if ( hour >= 12 ) {
+			img = 'afternoon.jpg';
+		} else if ( hour >= 9 ) {
+			img = 'morning.jpg';
+		} else if ( hour >= 7 ) {
+			img = 'breakfast.jpg';
+		} else if ( hour >= 5 ) {
+			img = 'dawn.jpg';
+		} else {
+			img = 'night.jpg';
+		}
 </script>
 <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Roboto+Condensed:700|Roboto:300,400,900" rel="stylesheet">
 <link href="{{ output.properties.theme_url }}/css/layout.css" rel="stylesheet">
