@@ -10,7 +10,7 @@
 			<div class="content">
 				<h1 class="title">Hot right now</h1>
 				<ul class="topics">
-					{% for topic in output.topics|slice(0, 7) %}
+					{% for topic in output.topics|slice(0, 8) %}
 					<li class="topic topic-{{ loop.index }}">
 						<a href="#!{{ topic.query }}"><span>#{{ topic.keyword|replace({'#':''}) }}</span> <small>{{ topic.volume }}</small></a>
 					</li>
@@ -24,10 +24,14 @@
 		<div class="list" id="list">
 
 		</div>
-		{% else %}
-		<p>Bot is scanning</p>
-		{% endif %}
 		{% include '_footer.html' %}
+		{% else %}
+		
+		<div class="empty cover" style="background-image:url({{ output.properties.theme_url }}/img/reading.gif);">
+			<h1 style="padding-top: 20%; text-align: center; color: white; text-transform: uppercase;">I'm reading tweets</h1>
+		</div>
+		
+		{% endif %}
 	</body>
 </html>
 	

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		{% include '_head.html' %}
+	</head>
+	<body class="browse">
+		{% include '_header.html' %}
+		{% if output.articles %}
+		<div class="content">
+			{% if output.articles %}
+			<div class="list">
+				<ul class="articles">
+					{% for article in output.articles %}
+					<li class="article article-{{ loop.index }}">
+						<article>
+							<a href="{{ article.url }}">
+								<header>
+									{% if article.source %}<h2>{{ article.source }}</h2>{% endif %}
+									<h1>{{ article.title }}</h1>
+								</header>
+							</a>
+						</article>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+		{% endif %}
+		{% include '_footer.html' %}
+	</body>
+</html>
+	

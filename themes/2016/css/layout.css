@@ -111,8 +111,9 @@ body {
 
 /* Page components */
 .bar {
-  background: rgba(180, 182, 150, 0.8) url(../img/night.jpg) bottom center no-repeat;
+  background: rgba(180, 182, 150, 0.8) bottom center no-repeat;
   background-blend-mode: multiply;
+  background-image: none;
   background-size: cover;
   bottom: auto;
   cursor: pointer;
@@ -199,7 +200,9 @@ body {
 }
 
 .cover {
-  background: rgba(180, 182, 150, 0.8) url(../img/night.jpg) center center no-repeat;
+  background: rgba(180, 182, 150, 0.8);
+  background-position: center center;
+  background-repeat: no-repeat;
   background-blend-mode: multiply;
   background-size: cover;
   display: block;
