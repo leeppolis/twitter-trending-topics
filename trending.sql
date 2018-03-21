@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `image` varchar(255) DEFAULT NULL,
   `url` tinytext NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQUE` (`url`(100)),
+  UNIQUE KEY `UNIQUE` (`url`(75)),
   UNIQUE KEY `UNIQUE TITLE` (`title`(50),`description`(50))
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `added` datetime NOT NULL,
   `topic_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQUE` (`link`(128),`topic_id`),
+  UNIQUE KEY `UNIQUE` (`link`(75),`topic_id`),
   KEY `run_id` (`topic_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
