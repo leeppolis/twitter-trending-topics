@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date_published` datetime DEFAULT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `title` varchar(255) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
 
 DROP TABLE IF EXISTS `links`;
 CREATE TABLE IF NOT EXISTS `links` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `link` tinytext NOT NULL,
   `added` datetime NOT NULL,
   `topic_id` int(11) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `links` (
 
 DROP TABLE IF EXISTS `runs`;
 CREATE TABLE IF NOT EXISTS `runs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `run` varchar(12) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `cover` varchar(255) DEFAULT NULL,
@@ -81,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `runs` (
 
 DROP TABLE IF EXISTS `runs_to_topics`;
 CREATE TABLE IF NOT EXISTS `runs_to_topics` (
-  `run_id` int(11) NOT NULL,
-  `topic_id` int(11) NOT NULL,
+  `run_id` bigint(20) NOT NULL,
+  `topic_id` bigint(20) NOT NULL,
   UNIQUE KEY `UNIQUE` (`run_id`,`topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `runs_to_topics` (
 
 DROP TABLE IF EXISTS `topics`;
 CREATE TABLE IF NOT EXISTS `topics` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `keyword` varchar(140) NOT NULL,
   `query` varchar(140) NOT NULL,
   `volume` int(11) NOT NULL DEFAULT '0',
@@ -110,10 +110,10 @@ CREATE TABLE IF NOT EXISTS `topics` (
 
 DROP TABLE IF EXISTS `topics_to_articles`;
 CREATE TABLE IF NOT EXISTS `topics_to_articles` (
-  `topic_id` int(11) NOT NULL,
-  `article_id` int(11) NOT NULL,
+  `topic_id` bigint(20) NOT NULL,
+  `article_id` bigint(20) NOT NULL,
   UNIQUE KEY `UNIQUE` (`topic_id`,`article_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
