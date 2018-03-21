@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `image` varchar(255) DEFAULT NULL,
   `url` tinytext NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQUE` (`url`(128)),
-  UNIQUE KEY `UNIQUE TITLE` (`title`(128),`description`(128))
+  UNIQUE KEY `UNIQUE` (`url`(100)),
+  UNIQUE KEY `UNIQUE TITLE` (`title`(50),`description`(50))
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
